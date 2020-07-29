@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ToDoApplication</string>
+    <string name="txDate">日付</string>
+    <string name="txSubject">件名</string>
+    <string name="txDetail">詳細</string>
+    <string name="btSave">保存</string>
+</resources>
