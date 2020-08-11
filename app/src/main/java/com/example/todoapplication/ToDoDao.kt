@@ -9,11 +9,11 @@ import androidx.room.Query
 @Dao
 interface ToDoDao {
     @Query("SELECT * FROM todoList" )
-    fun getAll(): List<ToDoEntity>
+    suspend fun getAll(): List<ToDoEntity>
 
     @Insert
-    fun insert(toDoEntity: ToDoEntity)
+    suspend fun insert(toDoEntity: ToDoEntity)
 
     @Delete
-    fun delete(toDoEntity: ToDoEntity)
+    suspend fun delete(toDoEntity: ToDoEntity)
 }

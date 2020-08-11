@@ -9,13 +9,18 @@ import android.widget.SimpleAdapter
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.row.*
 import kotlinx.android.synthetic.main.row.view.*
+import kotlinx.coroutines.*
 import java.util.*
-import java.util.zip.Inflater
+
 
 class MainActivity : AppCompatActivity() {
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -34,9 +39,24 @@ class MainActivity : AppCompatActivity() {
     //todoリストのデータ作成　
     private fun makeToDoList():MutableList<MutableMap<String,String>>{
         val todoList = mutableListOf<MutableMap<String,String>>()
-        //後でsqlか何かのデータベースに蓄積したデータをforeachで出力させる
         var todo = mutableMapOf<String,String>("date" to "2020/07/01", "subject" to "大阪でイベント","detail" to  "コロナリスク回避のため中止になるかも、コロナリスク回避のため中止になるかも、コロナリスク回避のため中止になるかも、コロナリスク回避のため中止になるかも、コロナリスク回避のため中止になるかも")
         todoList.add(todo)
+
+        val db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "todoList").build()
+        val todoEntity = ToDoEntity()
+        todoEntity.todoId = Random().nextLong()
+        //後で入力用のアクティビティから入力値をもってくる
+        todoEntity.date = "2020/08/07"
+        todoEntity.subject = "多治見へドライブ"
+        todoEntity.detail = "暑さで中止になるかも。熱中症に要注意。"
+        GlobalScope.launch{
+            db.ToDoDao().insert(todoEntity)
+            var sqlList = db.ToDoDao().getAll()
+            sqlList.forEach { elements ->
+                todo = mutableMapOf<String,String>("date" to elements.date, "subject" to elements.subject, "detail" to elements.detail)
+                todoList.add(todo)
+            }
+        }
         return todoList
     }
 

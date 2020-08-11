@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "todoList")
 class ToDoEntity {
     @PrimaryKey
-    var todo_id : Long = 0
+    var todoId : Long = 0
 
     @ColumnInfo
     var date : String = ""
