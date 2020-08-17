@@ -39,21 +39,27 @@ class MainActivity : AppCompatActivity() {
     //todoリストのデータ作成　
     private fun makeToDoList():MutableList<MutableMap<String,String>>{
         val todoList = mutableListOf<MutableMap<String,String>>()
-        var todo = mutableMapOf<String,String>("date" to "2020/07/01", "subject" to "大阪でイベント","detail" to  "コロナリスク回避のため中止になるかも、コロナリスク回避のため中止になるかも、コロナリスク回避のため中止になるかも、コロナリスク回避のため中止になるかも、コロナリスク回避のため中止になるかも")
-        todoList.add(todo)
+        // 8月17日修正　var は使わないようにする。この行は、取り合えず何かを表示させるためのものだったのでコメントアウト
+//        var todo = mutableMapOf<String,String>("date" to "2020/07/01", "subject" to "大阪でイベント","detail" to  "コロナリスク回避のため中止になるかも、コロナリスク回避のため中止になるかも、コロナリスク回避のため中止になるかも、コロナリスク回避のため中止になるかも、コロナリスク回避のため中止になるかも")
+//        todoList.add(todo)
 
-        val db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "todoList").build()
+        // 8月17日修正　buildを毎回呼ばないようにしてみる。　dbがnullの時だけbuildを呼び出す
+        var db : AppDatabase? = null
+        if(db ===  null){
+            db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "todoList").build()
+        }
         val todoEntity = ToDoEntity()
         todoEntity.todoId = Random().nextLong()
         //後で入力用のアクティビティから入力値をもってくる
-        todoEntity.date = "2020/08/07"
-        todoEntity.subject = "多治見へドライブ"
+        todoEntity.date = "2020/08/17"
+        todoEntity.subject = "姫路へドライブ"
         todoEntity.detail = "暑さで中止になるかも。熱中症に要注意。"
         GlobalScope.launch{
-            db.ToDoDao().insert(todoEntity)
+            //8月17日修正　”insertとfetchを一緒に行うことは通常ありません”　　データは何件か入ったのでinsertは一旦コメントアウト
+//            db.ToDoDao().insert(todoEntity)
             var sqlList = db.ToDoDao().getAll()
             sqlList.forEach { elements ->
-                todo = mutableMapOf<String,String>("date" to elements.date, "subject" to elements.subject, "detail" to elements.detail)
+                val todo = mutableMapOf<String,String>("date" to elements.date, "subject" to elements.subject, "detail" to elements.detail)
                 todoList.add(todo)
             }
         }

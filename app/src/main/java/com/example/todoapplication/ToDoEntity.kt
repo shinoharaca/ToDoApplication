@@ -6,16 +6,21 @@ import androidx.room.PrimaryKey
 
 
 @Entity(tableName = "todoList")
-class ToDoEntity {
+/* 8月17日修正　data class ,コンストラクタで初期化, しかし、プロパティをvalにしたいがうまくできない,
+ val にするとMainActivity.kt の todoEntity.date 他に下赤波線"Val cannot be reassingned"がでる*/
+data class ToDoEntity(
     @PrimaryKey
-    var todoId : Long = 0
+    var todoId : Long = 0,
 
     @ColumnInfo
-    var date : String = ""
+    var date : String = "",
 
     @ColumnInfo
-    var subject : String = ""
+    var subject : String = "",
 
     @ColumnInfo
     var detail : String = ""
+)
+{
+
 }
