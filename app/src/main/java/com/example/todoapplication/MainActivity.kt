@@ -35,29 +35,29 @@ class MainActivity : AppCompatActivity() {
         mainView.adapter = adapter
     }
 
-    //todoリストのデータ作成　8月19日　suspend に修正　
+        //todoリストのデータ作成　8月19日　suspend に修正　
         private suspend fun makeToDoList():List<ToDoEntity> {
-//        val todoList = mutableListOf<MutableMap<String,String>>()　　使わなくなったのでコメントアウト
-//        var todo = mutableMapOf<String,String>()　　　使わなくなったのでコメントアウト
-        var db : AppDatabase? = null
-        if(db ===  null){
-            db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "todoList").build()
-        }
-//        val todoEntity = ToDoEntity(Random().nextLong(),"2020/08/18","浜松へドライブ","最高気温になっている")　変数todoEntityは　不要になったのでコメントアウト
-//        GlobalScope.launch{
-//        8月17日修正　”insertとfetchを一緒に行うことは通常ありません”　　データは何件か入ったのでinsertは一旦コメントアウト
-//        db.ToDoDao().insert(todoEntity)
-//            sqlList.forEach { elements ->     使わなくなったのでコメントアウト
-//              todo = mutableMapOf<String,String>("date" to elements.date, "subject" to elements.subject, "detail" to elements.detail)
-//              todoList.add(todo)
-//                }
-//            }
-         return db.ToDoDao().getAll()
+            //val todoList = mutableListOf<MutableMap<String,String>>()　　使わなくなったのでコメントアウト
+            // var todo = mutableMapOf<String,String>()　　　使わなくなったのでコメントアウト
+            var db : AppDatabase? = null
+            if(db ===  null){
+                db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "todoList").build()
+             }
+            //val todoEntity = ToDoEntity(Random().nextLong(),"2020/08/18","浜松へドライブ","最高気温になっている")　変数todoEntityは　不要になったのでコメントアウト
+            //GlobalScope.launch{
+            //8月17日修正　”insertとfetchを一緒に行うことは通常ありません”　　データは何件か入ったのでinsertは一旦コメントアウト
+            //db.ToDoDao().insert(todoEntity)
+            //sqlList.forEach { elements ->     使わなくなったのでコメントアウト
+            //todo = mutableMapOf<String,String>("date" to elements.date, "subject" to elements.subject, "detail" to elements.detail)
+            //todoList.add(todo)
+            //}
+            //}
+            return db.ToDoDao().getAll()
         }
 
-    private inner class RecyclerTodoViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
-//        private val itemView: View = itemView  エラーになってしまう
-    }
+        private inner class RecyclerTodoViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
+            //private val itemView: View = itemView  エラーになってしまう
+        }
 
     private inner class RecycleAdapter(private val toDoListData:MutableList<MutableMap<String,String>>):RecyclerView.Adapter<RecyclerTodoViewHolder>(){
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerTodoViewHolder {
