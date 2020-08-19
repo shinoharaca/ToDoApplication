@@ -10,16 +10,16 @@ import androidx.room.PrimaryKey
  val にするとMainActivity.kt の todoEntity.date 他に下赤波線"Val cannot be reassingned"がでる*/
 data class ToDoEntity(
     @PrimaryKey
-    var todoId : Long = 0,
+    val todoId : Long = 0,
 
     @ColumnInfo
-    var date : String = "",
+    val date : String = "",
 
     @ColumnInfo
-    var subject : String = "",
+    val subject : String = "",
 
     @ColumnInfo
-    var detail : String = ""
+    val detail : String = ""
 )
 {
 
