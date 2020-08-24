@@ -6,13 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Transformations.map
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.row.view.*
 import kotlinx.coroutines.*
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.todoList)
         val layout = LinearLayoutManager(this)
         recyclerView.layoutManager = layout
-        GlobalScope.launch {
+        lifecycleScope.launch {
 
             val sqlList = makeToDoList()
             //抽出したリストに対して、日付、件名、詳細のキーをmutableMapで対応させたうえでtodoListにマッピング
@@ -36,11 +36,9 @@ class MainActivity : AppCompatActivity() {
 
     private suspend fun makeToDoList():List<ToDoEntity> {
 
-        var db : AppDatabase? = null
-        if(db ===  null){
-            db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "todoList").build()
-         }
+        val db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "todoList").build()
         return db.ToDoDao().getAll()
+
     }
 
     private inner class RecyclerTodoViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
