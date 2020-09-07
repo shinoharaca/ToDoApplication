@@ -8,17 +8,15 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "todoList")
 data class ToDoEntity(
     @PrimaryKey
-    val todoId : Long = 0,
+    val todoId : Long ,
 
     @ColumnInfo
-    val date : String = "",
+    val date : String ,
 
     @ColumnInfo
-    val subject : String = "",
+    val subject : String ,
 
     @ColumnInfo
-    val detail : String = ""
+    val detail : String
 )
-{
 
-}

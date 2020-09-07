@@ -20,7 +20,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.todoList)
+        //val recyclerView = findViewById<RecyclerView>(R.id.todoList) findViewByIdでなくても大丈夫
+        val recyclerView = todoList
         val layout = LinearLayoutManager(this)
         recyclerView.layoutManager = layout
         lifecycleScope.launch {
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         //private val itemView: View = itemView  エラーになってしまう
     }
 
-    private inner class RecycleAdapter(private val toDoListData:List<MutableMap<String,String>>):RecyclerView.Adapter<RecyclerTodoViewHolder>(){
+    private inner class RecycleAdapter(private val toDoListData:List<ToDoEntity>):RecyclerView.Adapter<RecyclerTodoViewHolder>(){
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerTodoViewHolder {
             val inflater = LayoutInflater.from(parent.context)
             val view = inflater.inflate(R.layout.row,parent,false)
